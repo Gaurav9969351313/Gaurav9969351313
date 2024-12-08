@@ -5,9 +5,9 @@
 
 - 👨‍💻 All of my projects are available at [https://gaurav9969351313.github.io/](https://gaurav9969351313.github.io/)
 
-- 📝 I regularly write articles on [https://medium.com/@gauravtale](https://medium.com/@gauravtalele)
+- 📝 I regularly write articles on [https://medium.com/@gauravtalele](https://medium.com/@gauravtalele)
 
-- 💬 Ask me about **Angular, Java, Spring Boot, Apache Camel, Spring Integration, Micro Services, Rest API's**
+- 💬 Ask me about **Angular, Java, Spring Boot, Apache Camel, Spring Integration, Micro Services, Rest API's, Snowflake, Oracle, Redis, Docker, Kubernetes, AWS**
 
 - 📫 How to reach me **epostgauravtalele@gmail.com, +91 9969351313**
 
