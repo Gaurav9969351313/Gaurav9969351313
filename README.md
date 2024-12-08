@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm Gaurav Talele</h1>
-<h3 align="center">A passionate Sr. Java Full Stack Come Polyglot developer from India</h3>
+<h3 align="center">A Passionate Sr. Java Full Stack Come Polyglot Engineer from India</h3>
 
 - 🌱 I’m currently learning **Axon, Microservices**
 
