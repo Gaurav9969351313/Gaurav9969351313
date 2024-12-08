@@ -1,10 +1,6 @@
 <h1 align="center">Hi 👋, I'm Gaurav Talele</h1>
 <h3 align="center">A passionate Sr. Java Full Stack Come Polyglot developer from India</h3>
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=gaurav9969351313&label=Profile%20views&color=0e75b6&style=flat" alt="gaurav9969351313" /> </p>
-
-<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=gaurav9969351313" alt="gaurav9969351313" /></a> </p>
-
 - 🌱 I’m currently learning **Axon, Microservices**
 
 - 👨‍💻 All of my projects are available at [https://gaurav9969351313.github.io/](https://gaurav9969351313.github.io/)
