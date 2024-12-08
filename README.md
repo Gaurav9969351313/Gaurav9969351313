@@ -13,7 +13,7 @@
 
 - 📄 Know about my experiences [https://drive.google.com/file/d/1mBZCF01p8At1qJxLGYKAI47SWEervB1r/view?usp=sharing](https://drive.google.com/file/d/1mBZCF01p8At1qJxLGYKAI47SWEervB1r/view?usp=sharing)
 
-- ⚡ Fun fact **I am wearied PhotoGrapher**
+- ⚡ Fun fact **I am a loud bathroom singer**
 
 ### Blogs posts
 <!-- BLOG-POST-LIST:START -->
