@@ -1,0 +1,93 @@
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface EnableS3Integration {
+}
+
+
+@Configuration
+public class S3ClientConfiguration {
+
+    @Bean
+    @ConditionalOnAnnotation(EnableS3Integration.class)
+    public S3Client s3Client(@Value("${aws.access.key}") String accessKey,
+                             @Value("${aws.secret.key}") String secretKey,
+                             @Value("${aws.region}") String region) {
+        return S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
+                .region(Region.of(region))
+                .build();
+    }
+}
+
+
+public class S3Service {
+
+    private final S3Client s3Client;
+
+    @Autowired
+    public S3Service(S3Client s3Client) {
+        this.s3Client = s3Client;
+    }
+
+    public void createFolder(String bucketName, String folderName) {
+        s3Client.putObject(PutObjectRequest.builder()
+            .bucket(bucketName)
+            .key(folderName + "/")
+            .build(), RequestBody.empty());
+    }
+
+    public void deleteFolder(String bucketName, String folderName) {
+        ListObjectsV2Response objects = s3Client.listObjectsV2(ListObjectsV2Request.builder()
+            .bucket(bucketName)
+            .prefix(folderName + "/")
+            .build());
+        for (S3Object object : objects.contents()) {
+            s3Client.deleteObject(DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(object.key())
+                .build());
+        }
+    }
+
+    public void uploadFile(String bucketName, String key, Path filePath) {
+        s3Client.putObject(PutObjectRequest.builder()
+            .bucket(bucketName)
+            .key(key)
+            .build(), RequestBody.fromFile(filePath));
+    }
+
+    public void downloadFile(String bucketName, String key, Path destination) {
+        s3Client.getObject(GetObjectRequest.builder()
+            .bucket(bucketName)
+            .key(key)
+            .build(), ResponseTransformer.toFile(destination));
+    }
+
+    public void compressFile(Path source, Path destination) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(destination.toFile());
+             GZIPOutputStream gos = new GZIPOutputStream(fos);
+             FileInputStream fis = new FileInputStream(source.toFile())) {
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = fis.read(buffer)) > 0) {
+                gos.write(buffer, 0, len);
+            }
+        }
+    }
+
+    public void deleteFile(String bucketName, String key) {
+        s3Client.deleteObject(DeleteObjectRequest.builder()
+            .bucket(bucketName)
+            .key(key)
+            .build());
+    }
+}
+
+
+@EnableS3Integration
+@SpringBootApplication
+public class S3IntegrationApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(S3IntegrationApplication.class, args);
+    }
+}
