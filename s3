@@ -91,3 +91,60 @@ public class S3IntegrationApplication {
         SpringApplication.run(S3IntegrationApplication.class, args);
     }
 }
+
+
+============================================================================
+
+import org.springframework.context.annotation.Import;
+import java.lang.annotation.*;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(S3Configuration.class) // Import S3 configuration when this annotation is present
+public @interface EnableS3Integration {
+}
+
+
+
+import org.springframework.context.annotation.Condition;
+import org.springframework.context.annotation.ConditionContext;
+import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.core.type.ClassMetadata;
+import java.util.Objects;
+
+public class EnableS3Condition implements Condition {
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        String mainClass = context.getEnvironment().getProperty("sun.java.command");
+        if (mainClass != null) {
+            try {
+                Class<?> clazz = Class.forName(mainClass.split(" ")[0]); // Extract main class name
+                return clazz.isAnnotationPresent(EnableS3Integration.class);
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+}
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.regions.Region;
+
+@Configuration
+public class S3Configuration {
+
+    @Bean
+    @Conditional(EnableS3Condition.class)  // Load only if EnableS3Integration is present
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.US_EAST_1) // Set your desired region
+                .build();
+    }
+}
+
+
